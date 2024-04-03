@@ -5,8 +5,9 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
-const {app, server} = require('./socket/socket')
+const { app, server } = require('./socket/socket');
 
+const indexRouter = require('./routes/index');
 const authRouter = require('./routes/authRouter');
 const usersRouter = require('./routes/usersRouter');
 const messagesController = require('./routes/messagesRouter');
@@ -21,6 +22,7 @@ app.use(cors({
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/', indexRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/messages', messagesController);
@@ -46,5 +48,5 @@ app.use(function (err, req, res, next) {
 });
 
 server.listen(5000, () => {
-  console.log("Server running")
-})
+  console.log("Server running");
+});
